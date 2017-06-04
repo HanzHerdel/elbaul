@@ -1,0 +1,219 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, shrink-to-fit=no, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>El Baúl - Spanish School</title>
+    <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
+    <link href="{% static "css/jquery.rateyo.min.css" %}" rel="stylesheet">
+    <link href="{% static "css/simple-sidebar.css" %}" rel="stylesheet">
+</head>
+<script type="text/javascript">
+        var toogleblock=false;
+</script>
+<body>
+    <div id="wrapper">
+        <div id="sidebar-wrapper" onmouseover="toogle()"; onmouseleave="toogleout()">
+        <div>
+            <ul class="sidebar-nav">
+                <li class="sidebar-brand">
+                    <a href="#">
+                        Menu
+                    </a>
+
+                </li>
+                <li>
+                    <a href="#" onclick='redir("about")'>About Us</a>                    
+                </li>
+                <li>
+                    <a href="#" onclick='redir("program")'>About Program</a>
+                </li>
+                <li>
+                    <a href="#" onclick='redir("staff")'>Staff</a>
+                </li>
+                <li>
+                    <a href="#" onclick='redir("activities")'>Activities</a>
+                </li>
+                <li>
+                    <a href="#" onclick='redir("volunteering")'>Volunteering</a>                    
+                </li>
+                <li>
+                    <a href="#" onclick='redir("gallery")'>Gallery</a>
+                </li>
+                <li>
+                    <a href="#" onclick='redir("contact")'>Contact Us</a>                    
+                </li>
+                <li>
+                    <a href="#" onclick='redir("rating")'>Comment & Rate</a>
+                </li>
+            </ul>
+            </div>
+            <div class="blockmenu" >
+                 <a href="#menu-toggle" class="btn" id="menu-toggle"><strong>Block Menu</strong></a>
+            </div>
+        </div>
+        <div id="page-content-wrapper">
+
+            <div class="container-fluid">
+                <div class="row">
+            
+                {% include urls.0 %}{% include urls.1 %}{% include urls.2 %}{% include urls.3 %} 
+                {% include urls.4 %}{% include urls.5 %}{% include urls.6 %}{% include urls.7 %}
+
+ <img style="margin-left: auto;margin-right: 80px;display: block" src="{% static "img/logoorig.gif" %}" alt="Logo"/>
+                    <div class="col-lg-4 col-md-12" id="minigaleria">
+                       
+                            {% for imagen in galeria %}
+                                <div class="col-lg-6 col-md-4 col-sm-6 col-xs-12 gallerybase" id="{{ forloop.counter }}">
+                                     <img class="galleryright" src="{{ imagen }}" alt="asdfasdf"/>
+                                </div>
+                            {% endfor %}
+                    </div>                
+                </div>           
+        </div>
+    </div>
+<script src="{% static "js/jquery.js" %}"></script>
+<script src="{% static "js/jquery.rateyo.min.js" %}"></script>
+<!-- Bootstrap Core JavaScript -->
+<script src="{% static "js/bootstrap.min.js" %}"></script>
+ <script type="text/javascript">
+ ////////////////////////////////////carga de templates/////////////////////////////
+    function redir(template){
+        if (template=="gallery"){
+            $("#minigaleria").hide();
+        }else if ($('#minigaleria').css('display') == 'none' ){
+          $("#minigaleria").show();  
+        }
+        $(".temp").hide();
+        $("#"+template).show();
+    }
+////////////////////////////////////////////////////////////////////////////////////
+ ///////////////////////////////// minigaleria///////////////////////
+var itemsgallery =  parseInt("{{lengal}}");
+var itemCambio = 7;
+var primerItem=1;
+    var carr = setInterval(function carrusel(){
+        if ((itemsgallery>6) && (itemsgallery>itemCambio)){
+            $("#"+primerItem.toString()).fadeOut();
+            setTimeout(function(){   $("#"+itemCambio.toString()).fadeIn(); }, 500);
+            itemCambio++;
+            primerItem++;
+        }else { clearInterval(carr);}
+    },5000);
+////////////////////////////////////////////////////////////////////////
+$().ready(function(){
+
+////////////////////////////////////////efecto inicio de imagenes minigaleria///////////////
+          $(".gallerybase").hide();
+           setTimeout(function(){  $("#1").fadeIn();}, 1000);setTimeout(function(){  $("#2").fadeIn();}, 1500); 
+           setTimeout(function(){  $("#3").fadeIn();}, 2000);setTimeout(function(){  $("#4").fadeIn();}, 2500); 
+           setTimeout(function(){  $("#5").fadeIn();}, 3000);setTimeout(function(){  $("#6").fadeIn();}, 3500); 
+/////////////////////////////////////////////////////////////////
+      $("#about").show();
+///////////////////////efecto menu/////////////////////////////////////////////////////////////////////
+      setTimeout(function(){  $("#wrapper").addClass("toggled");
+        }, 1200);  
+      setTimeout(function(){  $("#wrapper").removeClass("toggled");
+        }, 4800); 
+///////////////////////////////////////////////////////////////////////////////
+    })
+
+
+///////////////////////////////////Rating & comment///////////////////
+    $(function () { 
+        $("#rateYo").rateYo({
+        starWidth: "30px",
+        multiColor: { 
+          "startColor": "#FF0000", //RED
+          "endColor"  : "#F2DF34"  //GREEN
+        },
+        rating: 4.2,
+        precision: 10,
+        onSet: function (rating, rateYoInstance) { 
+              var rate = document.getElementById('rating');
+              $("#valuerating").attr('value', rating); 
+            }
+        });
+    });
+ /*   $(function () { 
+        $(".rates").rateYo({
+        starWidth: "30px",
+        multiColor: { 
+          "startColor": "#FF0000", //RED
+          "endColor"  : "#F2DF34"  //GREEN
+        },
+        readOnly: true,
+        rating: 3,
+        precision: 10,
+        });
+    });*/
+
+    $(function () {
+$( ".rates" ).each( function() {
+var current_rating = $(this).attr('id');
+    $(this).rateYo({
+        starWidth: "20px",
+        rating: current_rating,
+        readOnly: true,
+        multiColor: { 
+          "startColor": "#FF0000", //RED
+          "endColor"  : "#F2DF34"  //GREEN
+        },
+        });
+    });
+});
+////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////toogle menu////////////////////////////
+function toogle(){
+    if (!toogleblock){
+    $("#wrapper").addClass("toggled");  
+    }
+}
+function toogleout(){
+    if (!toogleblock)
+    $("#wrapper").removeClass("toggled");  
+}
+$("#menu-toggle").click(function(e) {
+    e.preventDefault();
+    if (!toogleblock){
+    $("#wrapper").addClass("toggled");
+      toogleblock=true;
+    }
+    else{
+    $("#wrapper").removeClass("toggled"); 
+       toogleblock=false; 
+    }
+});
+//////////////////////////////////////////////////////////////////////
+//////////////////////////////modal imagenes////////////////////////////////////
+var modal = document.getElementById('myModal');
+function modalnombre(nombre){
+    var img = document.getElementById(nombre);
+    var modalImg = document.getElementById("img01");
+    var captionText = document.getElementById("caption");
+        modal.style.display = "block";
+        modalImg.src = img.src;
+        captionText.innerHTML = "----";
+}
+// Get the image and insert it inside the modal - use its "alt" text as a caption
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() { 
+  modal.style.display = "none";
+}
+
+$(document).on("keyup", function (e) {
+     var code = e.charCode || e.keyCode;
+    if (e.keyCode == 27) { 
+  modal.style.display = "none";
+    } 
+});
+///////////////////////////////////////////////////////////////////////////////
+</script>
+</body>
+</html>
