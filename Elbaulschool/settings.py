@@ -84,7 +84,7 @@ DATABASES = {
         'NAME': 'herdel_baul',
         'USER': 'herdel',
         'PASSWORD': 'Nevermind',
-        'HOST': 'postgresqlX.alwaysdata.com',
+        'HOST': 'postgresql-moncompte.alwaysdata.net',
     }
 }
 
